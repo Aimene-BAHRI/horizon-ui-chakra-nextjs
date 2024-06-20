@@ -1,6 +1,7 @@
 'use client';
 import React, { ReactNode } from 'react';
 import 'styles/App.css';
+import "styles/globals.css";
 import 'styles/Contact.css';
 import 'styles/MiniCalendar.css';
 import { ChakraProvider } from '@chakra-ui/react';

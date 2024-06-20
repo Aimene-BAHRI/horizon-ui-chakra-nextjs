@@ -1,28 +1,7 @@
 'use client';
 /* eslint-disable */
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
 
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2022 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-import React from 'react';
+import React, { useState } from 'react';
 // Chakra imports
 import {
   Box,
@@ -38,6 +17,8 @@ import {
   InputRightElement,
   Text,
   useColorModeValue,
+  Alert,
+  AlertIcon,
 } from '@chakra-ui/react';
 // Custom components
 import { HSeparator } from 'components/separator/Separator';
@@ -47,6 +28,9 @@ import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
+import { useRouter } from 'next/navigation';
+import { login } from 'utils/api';
+import { getUserFromToken } from 'utils/auth';
 
 export default function SignIn() {
   // Chakra color mode
@@ -67,6 +51,32 @@ export default function SignIn() {
   );
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+
+  // State for form inputs
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const data = await login(username, password);
+      const accessToken = data.access;
+      const userDetails = getUserFromToken(accessToken);
+      console.log(userDetails)
+      // if (userDetails.is_learner) {
+      //   router.push('/course');
+      // } else if (userDetails.is_staff_user) {
+      //   router.push('/');
+      // }
+    } catch (err) {
+      setError('Login failed. Please check your credentials.');
+    }
+  };
+
   return (
     <DefaultAuthLayout illustrationBackground={'/img/auth/auth.png'}>
       <Flex
@@ -93,7 +103,7 @@ export default function SignIn() {
             fontWeight="400"
             fontSize="md"
           >
-            Enter your email and password to sign in!
+            Enter your username and password to sign in!
           </Text>
         </Box>
         <Flex
@@ -131,95 +141,108 @@ export default function SignIn() {
             </Text>
             <HSeparator />
           </Flex>
-          <FormControl>
-            <FormLabel
-              display="flex"
-              ms="4px"
-              fontSize="sm"
-              fontWeight="500"
-              color={textColor}
-              mb="8px"
-            >
-              Email<Text color={brandStars}>*</Text>
-            </FormLabel>
-            <Input
-              isRequired={true}
-              variant="auth"
-              fontSize="sm"
-              ms={{ base: '0px', md: '0px' }}
-              type="email"
-              placeholder="mail@simmmple.com"
-              mb="24px"
-              fontWeight="500"
-              size="lg"
-            />
-            <FormLabel
-              ms="4px"
-              fontSize="sm"
-              fontWeight="500"
-              color={textColor}
-              display="flex"
-            >
-              Password<Text color={brandStars}>*</Text>
-            </FormLabel>
-            <InputGroup size="md">
+          <form onSubmit={handleSubmit}>
+            <FormControl>
+              <FormLabel
+                display="flex"
+                ms="4px"
+                fontSize="sm"
+                fontWeight="500"
+                color={textColor}
+                mb="8px"
+              >
+                Username<Text color={brandStars}>*</Text>
+              </FormLabel>
               <Input
                 isRequired={true}
-                fontSize="sm"
-                placeholder="Min. 8 characters"
-                mb="24px"
-                size="lg"
-                type={show ? 'text' : 'password'}
                 variant="auth"
+                fontSize="sm"
+                ms={{ base: '0px', md: '0px' }}
+                type="text"
+                placeholder="username"
+                mb="24px"
+                fontWeight="500"
+                size="lg"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
-              <InputRightElement display="flex" alignItems="center" mt="4px">
-                <Icon
-                  color={textColorSecondary}
-                  _hover={{ cursor: 'pointer' }}
-                  as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                  onClick={handleClick}
-                />
-              </InputRightElement>
-            </InputGroup>
-            <Flex justifyContent="space-between" align="center" mb="24px">
-              <FormControl display="flex" alignItems="center">
-                <Checkbox
-                  id="remember-login"
-                  colorScheme="brandScheme"
-                  me="10px"
-                />
-                <FormLabel
-                  htmlFor="remember-login"
-                  mb="0"
-                  fontWeight="normal"
-                  color={textColor}
+              <FormLabel
+                ms="4px"
+                fontSize="sm"
+                fontWeight="500"
+                color={textColor}
+                display="flex"
+              >
+                Password<Text color={brandStars}>*</Text>
+              </FormLabel>
+              <InputGroup size="md">
+                <Input
+                  isRequired={true}
                   fontSize="sm"
-                >
-                  Keep me logged in
-                </FormLabel>
-              </FormControl>
-              <Link href="/auth/forgot-password">
-                <Text
-                  color={textColorBrand}
-                  fontSize="sm"
-                  w="124px"
-                  fontWeight="500"
-                >
-                  Forgot password?
-                </Text>
-              </Link>
-            </Flex>
-            <Button
-              fontSize="sm"
-              variant="brand"
-              fontWeight="500"
-              w="100%"
-              h="50"
-              mb="24px"
-            >
-              Sign In
-            </Button>
-          </FormControl>
+                  placeholder="Min. 8 characters"
+                  mb="24px"
+                  size="lg"
+                  type={show ? 'text' : 'password'}
+                  variant="auth"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <InputRightElement display="flex" alignItems="center" mt="4px">
+                  <Icon
+                    color={textColorSecondary}
+                    _hover={{ cursor: 'pointer' }}
+                    as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
+                    onClick={handleClick}
+                  />
+                </InputRightElement>
+              </InputGroup>
+              <Flex justifyContent="space-between" align="center" mb="24px">
+                <FormControl display="flex" alignItems="center">
+                  <Checkbox
+                    id="remember-login"
+                    colorScheme="brandScheme"
+                    me="10px"
+                  />
+                  <FormLabel
+                    htmlFor="remember-login"
+                    mb="0"
+                    fontWeight="normal"
+                    color={textColor}
+                    fontSize="sm"
+                  >
+                    Keep me logged in
+                  </FormLabel>
+                </FormControl>
+                <Link href="/auth/forgot-password">
+                  <Text
+                    color={textColorBrand}
+                    fontSize="sm"
+                    w="124px"
+                    fontWeight="500"
+                  >
+                    Forgot password?
+                  </Text>
+                </Link>
+              </Flex>
+              <Button
+                type="submit"
+                fontSize="sm"
+                variant="brand"
+                fontWeight="500"
+                w="100%"
+                h="50"
+                mb="24px"
+              >
+                Sign In
+              </Button>
+            </FormControl>
+          </form>
+          {error && (
+            <Alert status="error" mt={4}>
+              <AlertIcon />
+              {error}
+            </Alert>
+          )}
           <Flex
             flexDirection="column"
             justifyContent="center"

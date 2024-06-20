@@ -1,0 +1,32 @@
+{
+  "company": {
+    "unilever": "Unilever",
+    "others": "Others"
+  },
+  "role": {
+    "employee": "Employee",
+    "intern": "Intern",
+    "auditor": "Auditor",
+    "visitor": "Visitor",
+    "contractor": "Contractor"
+  },
+  "email": "Email",
+  "name": "Family Name",
+  "secname": "Second Name",
+  "nationality": "Nationality",
+  "organisation": "Organisation",
+  "identitycard": "Identity-card",
+  "identitytype": "Identity-type",
+  "startdate": "Start date",
+  "enddate": "End date",
+  "phonenumber": "Phone number",
+  "nextbtn": "Next",
+  "submitbtn": "Submit",
+  "uploidpic": "Upload a picture of you",
+  "Slogan": "Adds vitality to life",
+  "selectLanguage": "Please select a language",
+  "selectOrganization": "Please select an Organization",
+  "selectRole": "Please select a role",
+  "update": "Update",
+  "create": "Create"
+}

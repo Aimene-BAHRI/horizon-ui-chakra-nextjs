@@ -1,0 +1,32 @@
+{
+  "company": {
+    "unilever": "يونيلافار",
+    "others": "آخرون"
+  },
+  "role": {
+    "employee": "موظف",
+    "intern": "متدرب",
+    "auditor": "مدقق",
+    "visitor": "زائر",
+    "contractor": "مقاول"
+  },
+  "email": "البريد الالكتروني",
+  "name": "الاسم",
+  "secname": "اللقب",
+  "nationality": "الجنسية",
+  "organisation": "المنظمة",
+  "identitycard": "بطاقة الهوية",
+  "identitytype": "نوع الهوية",
+  "startdate": "تاريخ البدء",
+  "enddate": "تاريخ الانتهاء",
+  "phonenumber": "رقم الهاتف",
+  "nextbtn": "التالي",
+  "submitbtn": "تاكيد",
+  "uploidpic": "قم بتحميل صورة لك",
+  "Slogan": "يضيف الحيوية للحياة",
+  "selectLanguage": "الرجاء اختيار اللغة",
+  "selectOrganization": "الرجاء اختيار المنظمة أو المؤسسة",
+  "selectRole": "الرجاء اختيار العمل",
+  "update": "تعديل",
+  "create": "إنشاء"
+}
