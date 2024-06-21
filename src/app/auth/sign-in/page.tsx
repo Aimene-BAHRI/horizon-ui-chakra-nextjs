@@ -66,12 +66,11 @@ export default function SignIn() {
       const data = await login(username, password);
       const accessToken = data.access;
       const userDetails = getUserFromToken(accessToken);
-      console.log(userDetails)
-      // if (userDetails.is_learner) {
-      //   router.push('/course');
-      // } else if (userDetails.is_staff_user) {
-      //   router.push('/');
-      // }
+      if (userDetails?.is_learner) {
+        router.push('/course');
+      } else if (userDetails?.is_staff_user) {
+        router.push('/');
+      }
     } catch (err) {
       setError('Login failed. Please check your credentials.');
     }

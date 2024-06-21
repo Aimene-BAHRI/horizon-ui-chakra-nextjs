@@ -58,41 +58,37 @@ export const login = async (username: string, password: string) => {
   }
 };
 
-
 export const isAuthenticated = () => {
-	return localStorage.getItem("access_token") !== null;
+  return localStorage.getItem("access_token") !== null;
 };
 
 export const user = () => {
-	return localStorage.getItem("access_token") !== null ? jwtDecode(localStorage.getItem('access_token')) : null;
+  return localStorage.getItem("access_token") !== null ? jwtDecode(localStorage.getItem('access_token')) : null;
 };
 
-// Add other API functions as needed
-
 export const getOrganization = async (organizationName) => {
-	try {
-	  const response = await axiosInstance.get('/organizations/');
-	  const organization = response.data.find(org => org.name === organizationName);
-	  if (!organization) {
-		throw new Error('Organization not found');
-	  }
-	  return organization;
-	} catch (error) {
-	  console.error("Fetching organization failed:", error);
-	  throw error;
-	}
-  };
-  
-  export const fetchRoles = async () => {
-	try {
-	  const response = await axiosInstance.get('/roles/');
-	  return response.data;
-	} catch (error) {
-	  console.error("Fetching roles failed:", error);
-	  throw error;
-	}
-  };
-  
+  try {
+    const response = await axiosInstance.get('/organizations/');
+    const organization = response.data.find(org => org.name === organizationName);
+    if (!organization) {
+      throw new Error('Organization not found');
+    }
+    return organization;
+  } catch (error) {
+    console.error("Fetching organization failed:", error);
+    throw error;
+  }
+};
+
+export const fetchRoles = async () => {
+  try {
+    const response = await axiosInstance.get('/roles/');
+    return response.data;
+  } catch (error) {
+    console.error("Fetching roles failed:", error);
+    throw error;
+  }
+};
 
 export const getProfile = async () => {
   const response = await axiosInstance.get('/profile/');
@@ -109,12 +105,21 @@ export const updateProfile = async (id, profileData) => {
 };
 
 export const updateUser = async (id: number, userData: any) => {
-	try {
-	  const response = await axiosInstance.patch(`/users/${id}/`, userData);
-	  return response.data;
-	} catch (error) {
-	  console.error('Update user failed:', error);
-	  throw error;
-	}
-  };
-  
+  try {
+    const response = await axiosInstance.patch(`/users/${id}/`, userData);
+    return response.data;
+  } catch (error) {
+    console.error('Update user failed:', error);
+    throw error;
+  }
+};
+
+export const getVideos = async (courseId: number) => {
+  try {
+    const response = await axiosInstance.get(`/videos/${courseId}/`);
+    return response.data;
+  } catch (error) {
+    console.error('Fetching videos failed:', error);
+    throw error;
+  }
+};

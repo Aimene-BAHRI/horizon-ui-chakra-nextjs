@@ -19,11 +19,10 @@ interface FormProps {
 }
 
 const FormPage: React.FC<FormProps> = ({ params }) => {
-  console.log("Role parameters : ", params);
   const { lang, organization, role } = params;
   const [dictionary, setDictionary] = useState<any>(null);
   const router = useRouter();
-
+  const course_id = 1;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -79,6 +78,7 @@ const FormPage: React.FC<FormProps> = ({ params }) => {
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center space-y-8 z-10">
       {renderFormComponent()}
+      <BtnNext lang={lang} organization={organization} role={role} course_id={course_id} dictionary={dictionary} />
     </div>
   );
 };
