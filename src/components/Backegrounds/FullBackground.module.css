@@ -1,0 +1,9 @@
+/* FullBackground.module.css */
+.fullBackground {
+	height: 100vh;
+	width: 100vw;
+	position: relative; /* Ensure the image position correctly within its container */
+	z-index: --50;
+	position: center;
+  }
+  
